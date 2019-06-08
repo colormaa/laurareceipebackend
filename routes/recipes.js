@@ -351,6 +351,8 @@ router.post('/update', passport.authenticate('jwt', {session: false}), (req, res
             if (err) {
                 return res.status(400).json({msg: "Can not update recipe"});
             }
+            return res.json({data: doc});
+            /*
             Recipe.find().populate('category')
                 .then(recfind =>{
                     return res.json({data: recfind});
@@ -359,6 +361,7 @@ router.post('/update', passport.authenticate('jwt', {session: false}), (req, res
                     console.log("here 0")
                     return res.status(400).json({msg: "Can not get recipes"});
                 })
+                */
         });
     }else{
         console.log('here3', errors)
