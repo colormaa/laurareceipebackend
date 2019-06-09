@@ -9,13 +9,13 @@ const isEmpty = require('../is-empty');
 const mongoose = require('mongoose');
 var ytdl = require('ytdl-core');
 router.get('/download', (req, res)=>{
+    
     var url = req.query.url;
     var title = req.query.title;
     res.header('Content-Disposition', `attachment; filename=${title}.mp4`);
+    
     ytdl(url, {format: 'mp4'}).pipe(res);
-    res.render('download',
-    { title : 'Download' }
-    )
+    
 })
 async function getPageNumber(category){
     return new Promise(function(resolve, reject){
