@@ -32,6 +32,7 @@
     "passport-jwt": "^4.0.0",
     "prop-types": "^15.7.2",
     "request": "^2.88.0",
-    "validator": "^11.0.0"
+    "validator": "^11.0.0",
+    "ytdl-core": "^0.29.2"
   }
 }
