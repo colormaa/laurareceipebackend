@@ -8,14 +8,22 @@ const request = require('request');
 const isEmpty = require('../is-empty');
 const mongoose = require('mongoose');
 var ytdl = require('ytdl-core');
+const fs  = require('fs');
 router.get('/download', (req, res)=>{
     
     var url = req.query.url;
     var title = req.query.title;
-    res.header('Content-Disposition', `attachment; filename=${title}.mp4`);
+    console.log('download ===== ', url, title);
+    //res.header('Content-Disposition', `attachment; filename=${title}.mp4`);
     
+    //ytdl(url, {format: 'mp4'}).pipe(fs.createWriteStream('Video test.mp4'));
+    //ytdl('http://www.youtube.com/watch?v=A02s8omM_hI')
+    //.pipe(fs.createWriteStream('video.flv'));
+
+
+    ///var url = req.query.url;    
+    res.header("Content-Disposition", `attachment;\  filename=${title}.mp4`);    
     ytdl(url, {format: 'mp4'}).pipe(res);
-    
 })
 async function getPageNumber(category){
     return new Promise(function(resolve, reject){
