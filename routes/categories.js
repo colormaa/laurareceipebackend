@@ -15,6 +15,15 @@ router.post('/add', passport.authenticate('jwt', {session: false}), (req, res)=>
         errors.special = "Special is required";
     }
     if(isEmpty(errors)){
+        Category.count({})
+        .then(count=>{
+            return res.status(400).json({err: count});
+        })
+        .catch(err=>{
+            return res.status(400).json({err: err});
+        })
+        
+        /*
         Category.findOne({name: name})
         .then(result =>{
             if(result){
@@ -48,6 +57,7 @@ router.post('/add', passport.authenticate('jwt', {session: false}), (req, res)=>
                 
             }
         });
+        */
         
     }else{
         return res.status(400).json({err: errors});

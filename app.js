@@ -23,7 +23,7 @@ app.use('/graphql', cors(), graphqlHTTP({
   graphiql: true
 }))
 */
-mongoose.connect('mongodb://database:database1@ds233167.mlab.com:33167/mytestdb', {promiseLibrary: require('bluebird'), useNewUrlParser: true})
+mongoose.connect('mongodb://admin:admin@127.0.0.1:33167/mytestdb', {promiseLibrary: require('bluebird'), useNewUrlParser: true})
 .then(()=>{
   console.log("connection successfulty db");
 })
