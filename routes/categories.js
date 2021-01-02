@@ -35,10 +35,12 @@ async (req, res)=>{
                 return res.status(400).json({err: err});
             }
         }
+        return res.status(400).json({err: "HERe"});
+        {/*
         const cat = new Category();
         cat.name = name;
         cat.special = req.body.special;
-        cat.user = req.user.id;
+        cat.user = ''//req.user.id;
         cat.save().then(ca => {
             Category.find()
             .then(re =>{
@@ -56,6 +58,8 @@ async (req, res)=>{
             return res.status(400).json({err: errors});
 
         });
+
+    */}
     }else{
         return res.status(400).json({err: errors});
     }
