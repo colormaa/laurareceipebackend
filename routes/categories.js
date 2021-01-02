@@ -3,7 +3,9 @@ const router = express.Router();
 const passport = require('passport');
 const isEmpty = require("../is-empty");
 const Category = require('../models/Category');
-router.post('/add', passport.authenticate('jwt', {session: false}), (req, res)=>{
+router.post('/add', 
+//passport.authenticate('jwt', {session: false}), 
+(req, res)=>{
     console.log("req body add category", req.body, req.user);
     const name = !isEmpty(req.body.name) ? req.body.name.toLowerCase() : null;
     const special = !isEmpty(req.body.special) ? req.body.special : false;
