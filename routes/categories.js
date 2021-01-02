@@ -5,7 +5,7 @@ const isEmpty = require("../is-empty");
 const Category = require('../models/Category');
 router.post('/add', 
 //passport.authenticate('jwt', {session: false}), 
-(req, res)=>{
+async (req, res)=>{
     console.log("req body add category", req.body, req.user);
     const name = !isEmpty(req.body.name) ? req.body.name.toLowerCase() : null;
     const special = !isEmpty(req.body.special) ? req.body.special : false;
@@ -17,50 +17,45 @@ router.post('/add',
         errors.special = "Special is required";
     }
     if(isEmpty(errors)){
-        Category.count({})
-        .then(count=>{
-            return res.status(400).json({err: count});
+        var count = 0;
+        try{
+            var count = await Category.count({})
+            
+        }catch(err){
+            return res.status(400).json({err: err});
+        }
+        if(count>0){
+            try{
+                var resultFind = await Category.findOne({name: name});
+                if(resultFind){
+                    errors.name = "category name already exists"
+                    return res.status(400).json({err: errors});
+                }
+            }catch(err){
+                return res.status(400).json({err: err});
+            }
+        }
+        const cat = new Category();
+        cat.name = name;
+        cat.special = req.body.special;
+        cat.user = req.user.id;
+        cat.save().then(ca => {
+            Category.find()
+            .then(re =>{
+                return res.json({data: re});
+            })
+            .catch(err=>{
+                errors.msg = "Can not get categories";
+                return res.status(400).json({err: errors})
+            });
+
         })
         .catch(err=>{
-            return res.status(400).json({err: err});
-        })
-        
-        /*
-        Category.findOne({name: name})
-        .then(result =>{
-            if(result){
-                console.log("category result", result);
-                errors.name = "category name already exists"
-                return res.status(400).json({err: errors});
-            }else{
-                
-                const cat = new Category();
-                cat.name = name;
-                cat.special = req.body.special;
-                cat.user = req.user.id;
-                cat.save().then(ca => {
-                    console.log("cat ", ca);
-                    Category.find()
-                    .then(re =>{
-                        return res.json({data: re});
-                    })
-                    .catch(err=>{
-                        errors.msg = "Can not get categories";
-                        return res.status(400).json({err: errors});
-                    });
-                    
-                })
-                .catch(err=>{
-                    console.log('err ', err);
-                    errors.msg = "Can not add category";
-                    return res.status(400).json({err: errors});
-                    
-                });
-                
-            }
+            console.log('err ', err);
+            errors.msg = "Can not add category";
+            return res.status(400).json({err: errors});
+
         });
-        */
-        
     }else{
         return res.status(400).json({err: errors});
     }
