@@ -8,6 +8,7 @@ const request = require('request');
 const isEmpty = require('../is-empty');
 const mongoose = require('mongoose');
 var ytdl = require('ytdl-core');
+const youtubedl = require('youtube-dl-exec')
 const fs  = require('fs');
 router.get('/download', (req, res)=>{
     
@@ -22,8 +23,21 @@ router.get('/download', (req, res)=>{
 
 
     ///var url = req.query.url;    
-    res.header("Content-Disposition", `attachment;\  filename=${title}.mp4`);    
-    ytdl(url, {format: 'mp4'}).pipe(res);
+    /*res.header("Content-Disposition", `attachment;\  filename=${title}.mp4`);    
+    ytdl(url, {format: 'mp4'}).pipe(res);*/
+    const video = youtubedl('https://www.youtube.com/watch?v=BzE1mX4Px0I',
+    // Optional arguments passed to youtube-dl.
+    ['--format=18'],
+  )
+   
+  // Will be called when the download starts.
+  video.on('info', function(info) {
+    console.log('Download started')
+    console.log('filename: ' + info._filename)
+    console.log('size: ' + info.size)
+  })
+   
+  video.pipe(fs.createWriteStream('myvideo.mp4'))
 })
 async function getPageNumber(category){
     return new Promise(function(resolve, reject){
