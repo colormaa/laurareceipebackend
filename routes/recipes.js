@@ -25,9 +25,9 @@ router.get('/download', (req, res)=>{
     ///var url = req.query.url;    
     /*res.header("Content-Disposition", `attachment;\  filename=${title}.mp4`);    
     ytdl(url, {format: 'mp4'}).pipe(res);*/
-    const video = youtubedl('https://www.youtube.com/watch?v=BzE1mX4Px0I',
+    const video = youtubedl('https://www.youtube.com/watch?v=BzE1mX4Px0I'
     // Optional arguments passed to youtube-dl.
-    ['--format=18'],
+    //['--format=18'],
   )
    
   // Will be called when the download starts.
