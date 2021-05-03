@@ -34,7 +34,7 @@ async (req, res)=>{
                     const cat = new Category();
                     cat.name = name;
                     cat.special = req.body.special;
-                    cat.user = req.user.id;
+                    //cat.user = req.user.id;
                     cat.save().then(ca => {
                         console.log("caterogoy then ", ca)
                         return res.json({data:re})
@@ -55,7 +55,7 @@ async (req, res)=>{
             const cat = new Category();
             cat.name = name;
             cat.special = req.body.special;
-            cat.user = req.user.id;
+            //cat.user = req.user.id;
             cat.save().then(ca => {
                 console.log("caterogoy then ", ca)
                 return res.json({data:re})
