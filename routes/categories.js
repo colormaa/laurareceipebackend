@@ -37,7 +37,7 @@ async (req, res)=>{
                     //cat.user = req.user.id;
                     cat.save().then(ca => {
                         console.log("caterogoy then ", ca)
-                        return res.json({data:re})
+                        return res.json({data:ca})
             
                     })
                     .catch(err=>{
@@ -58,7 +58,7 @@ async (req, res)=>{
             //cat.user = req.user.id;
             cat.save().then(ca => {
                 console.log("caterogoy then ", ca)
-                return res.json({data:re})
+                return res.json({data:ca})
     
             })
             .catch(err=>{
