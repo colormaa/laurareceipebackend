@@ -65,4 +65,5 @@ let recipe = new Schema({
         }
     ]
 });
+recipe.index({'$**': 'text'});
 module.exports = mongoose.model('recipes', recipe)

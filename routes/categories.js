@@ -34,10 +34,10 @@ async (req, res)=>{
                     const cat = new Category();
                     cat.name = name;
                     cat.special = req.body.special;
-                    //cat.user = req.user.id;
-                    cat.save().then(ca => {
-                        console.log("caterogoy then ", ca)
-                        return res.json({data:ca})
+                    cat.user = req.user._id;
+                    cat.save().then(async ca => {
+                        var list  = await Category.find().populate('user')
+                        return res.status(200).json({data:list})
             
                     })
                     .catch(err=>{
@@ -55,10 +55,11 @@ async (req, res)=>{
             const cat = new Category();
             cat.name = name;
             cat.special = req.body.special;
-            //cat.user = req.user.id;
-            cat.save().then(ca => {
+            cat.user = req.user._id;
+            cat.save().then(async ca => {
                 console.log("caterogoy then ", ca)
-                return res.json({data:ca})
+                var list  = await Category.find().populate('user')
+                return res.status(200).json({data:list})
     
             })
             .catch(err=>{
