@@ -4,7 +4,7 @@ const passport = require('passport');
 const isEmpty = require("../is-empty");
 const Category = require('../models/Category');
 router.post('/add', 
-//passport.authenticate('jwt', {session: false}), 
+passport.authenticate('jwt', {session: false}), 
 async (req, res)=>{
     console.log("req body add category", req.body, req.user);
     const name = !isEmpty(req.body.name) ? req.body.name.toLowerCase() : null;
@@ -30,24 +30,35 @@ async (req, res)=>{
                 if(resultFind){
                     errors.name = "category name already exists"
                     return res.status(400).json({err: errors});
+                }else{
+                    const cat = new Category();
+                    cat.name = name;
+                    cat.special = req.body.special;
+                    //cat.user = req.user.id;
+                    cat.save().then(ca => {
+                        console.log("caterogoy then ", ca)
+                        return res.status(500).json({data:re})
+            
+                    })
+                    .catch(err=>{
+                        console.log('err ', err);
+                        errors.msg = "Can not add category";
+                        return res.status(400).json({err: errors});
+            
+                    });
                 }
             }catch(err){
                 return res.status(400).json({err: err});
             }
         }else{
+            
             const cat = new Category();
             cat.name = name;
             cat.special = req.body.special;
-            cat.user = ''//req.user.id;
+            //cat.user = req.user.id;
             cat.save().then(ca => {
-                Category.find()
-                .then(re =>{
-                    return res.json({data: re});
-                })
-                .catch(err=>{
-                    errors.msg = "Can not get categories";
-                    return res.status(400).json({err: errors})
-                });
+                console.log("caterogoy then ", ca)
+                return res.status(500).json({data:re})
     
             })
             .catch(err=>{
@@ -57,7 +68,7 @@ async (req, res)=>{
     
             });
         }
-        return res.status(400).json({err: "HERe"});
+        //return res.status(400).json({err: "HERe"});
         
     }else{
         return res.status(400).json({err: errors});
