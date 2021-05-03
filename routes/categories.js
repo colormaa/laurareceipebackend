@@ -34,32 +34,31 @@ async (req, res)=>{
             }catch(err){
                 return res.status(400).json({err: err});
             }
-        }
-        return res.status(400).json({err: "HERe"});
-        {/*
-        const cat = new Category();
-        cat.name = name;
-        cat.special = req.body.special;
-        cat.user = ''//req.user.id;
-        cat.save().then(ca => {
-            Category.find()
-            .then(re =>{
-                return res.json({data: re});
+        }else{
+            const cat = new Category();
+            cat.name = name;
+            cat.special = req.body.special;
+            cat.user = ''//req.user.id;
+            cat.save().then(ca => {
+                Category.find()
+                .then(re =>{
+                    return res.json({data: re});
+                })
+                .catch(err=>{
+                    errors.msg = "Can not get categories";
+                    return res.status(400).json({err: errors})
+                });
+    
             })
             .catch(err=>{
-                errors.msg = "Can not get categories";
-                return res.status(400).json({err: errors})
+                console.log('err ', err);
+                errors.msg = "Can not add category";
+                return res.status(400).json({err: errors});
+    
             });
-
-        })
-        .catch(err=>{
-            console.log('err ', err);
-            errors.msg = "Can not add category";
-            return res.status(400).json({err: errors});
-
-        });
-
-    */}
+        }
+        return res.status(400).json({err: "HERe"});
+        
     }else{
         return res.status(400).json({err: errors});
     }
