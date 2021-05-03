@@ -34,10 +34,10 @@ async (req, res)=>{
                     const cat = new Category();
                     cat.name = name;
                     cat.special = req.body.special;
-                    //cat.user = req.user.id;
+                    cat.user = req.user.id;
                     cat.save().then(ca => {
                         console.log("caterogoy then ", ca)
-                        return res.status(500).json({data:re})
+                        return res.json({data:re})
             
                     })
                     .catch(err=>{
@@ -55,10 +55,10 @@ async (req, res)=>{
             const cat = new Category();
             cat.name = name;
             cat.special = req.body.special;
-            //cat.user = req.user.id;
+            cat.user = req.user.id;
             cat.save().then(ca => {
                 console.log("caterogoy then ", ca)
-                return res.status(500).json({data:re})
+                return res.json({data:re})
     
             })
             .catch(err=>{
