@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
 var graphqlHTTP = require('express-graphql');
+const config = require('./config/keys_dev')
 //var schema = require('./graphql/bookSchema');
 var cors = require('cors');
 var indexRouter = require('./routes/index');
@@ -23,7 +24,7 @@ app.use('/graphql', cors(), graphqlHTTP({
   graphiql: true
 }))
 */
-mongoose.connect('mongodb://admin:admin@127.0.0.1:27017/mytestdb', {promiseLibrary: require('bluebird'), useNewUrlParser: true})
+mongoose.connect(config.mongoURI, {promiseLibrary: require('bluebird'), useNewUrlParser: true})
 .then(()=>{
   console.log("connection successfulty db");
 })
