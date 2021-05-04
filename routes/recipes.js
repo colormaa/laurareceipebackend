@@ -88,7 +88,7 @@ async function getPageNumber(category){
 }
 async function saveRecipeTitle(obj){
     const find = await Recipe.findOne({link: obj.link});
-     //.log("find recipe ", find ? find.link: 'notfound');
+     console.log("find recipe ", find ? find.link: 'notfound');
      
     if(!isEmpty(find)){
         //console.log("exists ", find.category, obj.category);
@@ -182,6 +182,7 @@ async function delaylog(e, category){
 router.get('/parse/titlenum/', async (req, res)=>{
     const number = !isNaN(parseInt(req.query.number)) ? parseInt(req.query.number) : 1;
     const title = req.query.title ? req.query.title: 'breakfast';
+    console.log("parse title ", title, number)
     Category.findOne({name: title}).then(async re=>{
         const result = await delaylog(number, re);
         return res.json({data: result});
@@ -848,9 +849,7 @@ async function recipeUpdate(recipe){
                const obj = await  recipecheerio(html, recipe.link);
                console.log("object  ", obj);
                await recipeUpdateSave(obj);
-               //console.log('object  ', obj);
-
-               //resolve(obj);
+               
                resolve(obj);
             }else{
                 //console.log("err ", err, response.statusCode, recipe.link);
