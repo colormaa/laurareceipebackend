@@ -24,7 +24,7 @@ app.use('/graphql', cors(), graphqlHTTP({
   graphiql: true
 }))
 */
-mongoose.connect(config.mongoURI, {promiseLibrary: require('bluebird'), useNewUrlParser: true})
+mongoose.connect(config.mongoURI, {promiseLibrary: require('bluebird'), createIndex:true,  useNewUrlParser: true})
 .then(()=>{
   console.log("connection successfulty db");
 })

@@ -10,8 +10,8 @@ const mongoose = require('mongoose');
 var ytdl = require('ytdl-core');
 const youtubedl = require('youtube-dl-exec')
 const fs  = require('fs');
-router.get('/download', (req, res)=>{
-    
+router.get('/download', async (req, res)=>{
+    try{
     var url = req.query.url;
     var title = req.query.title;
     console.log('download ===== ', url, title);
@@ -22,22 +22,41 @@ router.get('/download', (req, res)=>{
     //.pipe(fs.createWriteStream('video.flv'));
 
 
-    ///var url = req.query.url;    
-    /*res.header("Content-Disposition", `attachment;\  filename=${title}.mp4`);    
-    ytdl(url, {format: 'mp4'}).pipe(res);*/
-    const video = youtubedl('https://www.youtube.com/watch?v=BzE1mX4Px0I'
-    // Optional arguments passed to youtube-dl.
-    //['--format=18'],
-  )
+    var url1 =req.query.url;    
+    res.header("Content-Disposition", `attachment;\  filename=${title}.mp4`);    
+    ytdl(url1, {format:"mp4"}).pipe(res);
+    /*const video =  youtubedl('https://www.youtube.com/watch?v=BzE1mX4Px0I',
+        {noCheckCertificate:true},
+        ['--format=18'],
+    )*/
+    //.then(vid=>{
+    //    console.log("video ", vid)
+    //    vid.pipe(res)
+    //})
+    //.pipe(res)
+    
    
   // Will be called when the download starts.
-  video.on('info', function(info) {
+  /*video.on('info', function(info) {
     console.log('Download started')
     console.log('filename: ' + info._filename)
     console.log('size: ' + info.size)
-  })
+  })*/
    
-  video.pipe(fs.createWriteStream('myvideo.mp4'))
+  //video.pipe(fs.createWriteStream('myvideo.mp4'))
+  //video.pipe(res)
+
+
+    /*
+    const subprocess = youtubedl.raw('https://www.youtube.com/watch?v=BzE1mX4Px0I', { noCheckCertificate: true })
+    console.log(`Running subprocess as ${subprocess.pid}`)
+    subprocess.stdout.pipe(res)
+    subprocess.stderr.pipe(res)*/
+    //res.status(200).json({err:"try end"})  
+}catch(e){
+    console.log("E ", e)
+  res.status(500).json({err:"error occured"})  
+}
 })
 async function getPageNumber(category){
     return new Promise(function(resolve, reject){
