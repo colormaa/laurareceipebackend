@@ -803,10 +803,7 @@ async function recipecheerio(html, link){
     //}
     //console.log("regex ", youtube1.match(VID_REGEX)[1]);
    const preparation = $('div.cs-recipe-details').find('div').get(0).children[1].data;
-    //const preparation = $('div.cs-recipe-single-preparation').find('ul').get(0);
-    //console.log("preparation ", preparation);
-
-    //jkl                    
+                    
 
     const cooktime = $('div.cs-recipe-details').find('div').get(1).children[1].data;
     const episode = $('div.cs-recipe-details').find('div').get(3).children[1].data;
